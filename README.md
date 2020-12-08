@@ -20,9 +20,9 @@ mongod
 
 *The MongoDB server should be listening on `mongodb://localhost:27017/mynode`. Or you can change it on `src/config/database.config.js`. More about [getting started with MongoDB](https://www.freecodecamp.org/news/learn-mongodb-a4ce205e7739/)*
 
-4. Still on the root project, run the app with 
+4. Still on the root project, run the app in development mode with 
 ```bash
-npm start
+npm run startDev
 ``` 
 5. The app would be served in `http://localhost:4000/`
 
