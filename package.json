@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "npm run build && node ./build/app.js",
-    "dev": "nodemon --exec babel-node app.js",
+    "startDev": "nodemon --exec babel-node app.js",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
+    "build": "npm run build-babel",
     "test": "jest"
   },
   "author": "Alif Ramdani",
