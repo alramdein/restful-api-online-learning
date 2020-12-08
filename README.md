@@ -7,7 +7,7 @@ CRUD application RESTful API. Created with NodeJs and MongoDb.
 
 1. Clone repository with <br/>
 ```bash
-git clone https://github.com/alramdein/restful-api-nodejs-mongodb.git
+git clone https://github.com/alramdein/restful-api-online-learning.git
 ```
 2. On the root project, run 
 ```bash
