@@ -28,7 +28,9 @@ mongoose.connect(dbUrl, {
 });
 
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to Online Learning application. Created by Alif Ramdani"});
+    res.json({"message": "Welcome to Online Learning application. Created by Alif Ramdani.",
+     "documentation": "Please read the documentation on the README in the GitHub repository below",
+    "repository" : "https://github.com/alramdein/restful-api-online-learning"});
 });
 
 // other api routes 
