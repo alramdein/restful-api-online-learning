@@ -1,27 +1,28 @@
-import Product from '../models/product.model';
-import User from '../models/user.model';
+import Lesson from '../models/lesson.model';
+import Event from '../models/event.model';
 
 // these function was created to support easy maintainability
 
-export const insertProductQuery = (req) => {
+export const insertLessonQuery = (req) => {
     return {
-        name: req.body.name,
-        price: req.body.price,
-        weight: req.body.weight,
+        title: req.body.title,
+        lecturer: req.body.lecturer,
+        type: req.body.type,
         description: req.body.description,
     };
 };
 
-export const insertUserQuery = (req) => {
+export const insertEventQuery = (req) => {
     return {
-        username: req.body.username,
-        password: req.body.password,
+        eventName: req.body.eventName,
+        date: req.body.date,
+        description: req.body.description,
     };
 };
 
 export const emptyErrorMessage = (responseData, res) => {
     res.status(400).send({
-        message: `${responseData.item} can't be empty`
+        message: `${responseData.item} can't be empty. Make sure fill all required field.`
     });
 };
 
@@ -34,9 +35,9 @@ export const serverErrorMessage = (responseData, err, res) => {
 
 export const notFoundErrorMessage = (responseData, err, res) => {
     let _id = '';
-    if (responseData.item === "User") 
-        _id = `username ${responseData.itemId}`;
-    else if (responseData.item === "Product") 
+    if (responseData.item === "Event") 
+        _id = `eventName ${responseData.itemId}`;
+    else if (responseData.item === "Lesson") 
         _id = `id ${responseData.itemId}`;
 
     res.status(404).send({
@@ -47,36 +48,48 @@ export const notFoundErrorMessage = (responseData, err, res) => {
 
 export const validateRequest = (req, res, responseData) => {
     switch (responseData.item) {
-        case "User": if(!req.body.username || !req.body.password) 
-                        return emptyErrorMessage(responseData, res); 
-                    break;
-        case "Product": if(!req.body.name || !req.body.price || !req.body.weight || !req.body.description) 
-                        return emptyErrorMessage(responseData, res); 
-                    break;
+        case "Event": {
+            if(!req.body.eventName || !req.body.date || !req.body.description) {
+                emptyErrorMessage(responseData, res); 
+                return 0;
+            }
+            break;
+        }
+                       
+        case "Lesson": {
+            if(!req.body.title || !req.body.lecturer || !req.body.type || !req.body.description) { 
+                emptyErrorMessage(responseData, res); 
+                return 0;
+            }
+            break;
+        }
+         
     }
+
+    return 1;
 };
 
 export const identifyRequestType = async (responseData, req) => {
-    if(responseData.item == "User") {
+    if(responseData.item == "Event") {
         if (responseData.activity === 'retrieving')  
-            return await User.findOne({username: req.params.username});
+            return await Event.findOne({eventName: req.params.eventName});
 
         else if (responseData.activity === 'updating') 
-            return await User.findOneAndUpdate({username: req.params.username},
-                insertUserQuery(req), {new: true});
+            return await Event.findByIdAndUpdate(req.params.eventId,
+                insertEventQuery(req), {new: true});
 
         else if (responseData.activity === 'deleting')
-            return await User.findOneAndRemove({username: req.params.username});
-    } else if(responseData.item == "Product") {
+            return await Event.findByIdAndRemove(req.params.eventId);
+    } else if(responseData.item == "Lesson") {
         if (responseData.activity === 'retrieving')  
-            return await Product.findById(req.params.productId);
+            return await Lesson.findById(req.params.lessonId);
 
         else if (responseData.activity === 'updating') 
-            return await Product.findByIdAndUpdate(req.params.productId,
-                insertProductQuery(req), {new: true});
+            return await Lesson.findByIdAndUpdate(req.params.lessonId,
+                insertLessonQuery(req), {new: true});
 
         else if (responseData.activity === 'deleting')
-            return await Product.findByIdAndRemove(req.params.productId);
+            return await Lesson.findByIdAndRemove(req.params.lessonId);
     }
 };
 
@@ -84,10 +97,10 @@ export const performRequest = async (responseData, req, res) => {
     try {
         let data = await identifyRequestType(responseData, req);
         console.log(`data: ${data}`);
-        if(data.username)
-            responseData.itemId = req.params.username;
+        if(data.eventName)
+            responseData.itemId = req.params.eventId;
         else if(data.price)
-            responseData.itemId = req.params.productId;
+            responseData.itemId = req.params.lessonId;
 
         responseData.data = data;
         handleSuccessSearch(responseData, req, res);
@@ -109,9 +122,9 @@ export const handleSuccessSearch = (responseData, req, res) => {
     }
     
     let _id = '';
-    if (responseData.item === "User") 
-        _id = `username ${responseData.itemId}`;
-    else if (responseData.item === "Product")  
+    if (responseData.item === "Event") 
+        _id = `id ${responseData.itemId}`;
+    else if (responseData.item === "Lesson")  
         _id = `id ${responseData.itemId}`;
     
     if (responseData.activity === 'retrieving')  

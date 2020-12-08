@@ -1,11 +1,6 @@
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/alramdein/restful-api-nodejs-mongodb.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/alramdein/restful-api-nodejs-mongodb/context:javascript)
-[![Maintainability](https://api.codeclimate.com/v1/badges/cd9567d43c95cad5bfda/maintainability)](https://codeclimate.com/github/alramdein/restful-api-nodejs-mongodb/maintainability)
-![Repo size](https://img.shields.io/github/repo-size/alramdein/restful-api-nodejs-mongodb)
+# Online Learning Admin WebApp 
 
-# Mynode App
-
-CRUD application RESTful API with JWT user authentication. Created with NodeJs and MongoDb.
-> **DISCLAIMER:**</span> *User authentication in this project is just for educational/practice purposes only. Using JWT in production is not recommended because there are a lot of implementation risks of rolling your own authentication solution. Instead use third-party authentication.* [Learn more.](https://dzone.com/articles/user-authentication-best-practices-checklist)
+CRUD application RESTful API. Created with NodeJs and MongoDb.
 
 
 ## Installation
@@ -31,68 +26,20 @@ npm start
 ``` 
 5. The app would be served in `http://localhost:4000/`
 
-## Usage
-
-To test the API, I recommend using [Postman](https://www.postman.com/downloads/).
-
-Login with endpoint
-
-``` bash
-POST /login 
-```
-
-by sending `username` and `password` in the `request body`. 
-
-If users don't exist yet, login with these special credential:
-
-```bash
-username: admin
-password: admin
-```
-
-After that, you will get an `Access Token` from the response. Use it to access all the endpoint by
-set `Access-Token` in the `request header`.
-
-```bash
-"Access-Token": <Random access token>
-```
+To test the API, I recommend using [Insomnia](https://insomnia.rest/download/).
 
 ## Routes
-1. POST `/login`: user login
 2. GET `/`: welcome message
-3. POST `/api/v1/users`: add a user
-4. GET `/api/v1/users`: get all user
-5. GET `/api/v1/users/:username`: get user by username
-6. PUT `/api/v1/users/:username`: update user by username
-7. DELETE `/api/v1/users/:username`: delete user by username
-8. POST `/api/v1/products`: add a product
-9. GET `/api/v1/products`: get all product
-10. GET `/api/v1/products/:productId`: get product by id
-11. PUT `/api/v1/products/:productId`: update product by id
-12. DELETE `/api/v1/products/:productId`: delete product by id
-
-
-> **Note**: `/logout` endpoint is not provided because it should be handled on the client-side by destroying the `Access Token`
-
-## Data
-
-**Users attributes**
-```bash
-{
- username: <example>,
- password: <example>
-}
-```
-
-**Product attributes**
-```bash
-{
- name: <example>,
- price: <example>,
- weight: <example>,
- description: <example>
-}
-```
+3. POST `/api/v1/events`: add a event
+4. GET `/api/v1/events`: get all events
+5. GET `/api/v1/events/:eventId`: get event by eventId
+6. PUT `/api/v1/events/:eventId`: update event by eventId
+7. DELETE `/api/v1/events/:eventId`: delete event by eventId
+8. POST `/api/v1/lessons`: add a lesson
+9. GET `/api/v1/lessons`: get all lessons
+10. GET `/api/v1/lessons/:lessonsId`: get lesson by id
+11. PUT `/api/v1/lessons/:lessonsId`: update lesson by id
+12. DELETE `/api/v1/lessons/:lessonsId`: delete lesson by id
 
 ## Contributing
 
